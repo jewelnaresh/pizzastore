@@ -10,7 +10,7 @@ from .models import Item, OrderItem, Order
 
 class HomeView(ListView):
     model = Item
-    paginate_by = 2
+    paginate_by = 10
     template_name = 'products/home.html'
 
 
@@ -20,16 +20,16 @@ class ItemDetailView(DetailView):
 
 
 def add_to_cart(request, slug):
-    item = get_object_or_404(Item, slug)
+    item = get_object_or_404(Item, slug=slug)
     order_item, created = OrderItem.objects.get_or_create(
         item=item, user=request.user, ordered=False)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
 
     if order_qs.exists():
         order = order_qs[0]
-        if order.Items.filter(item__slug=item.slug).exists:
+        if order.items.filter(item__slug=item.slug).exists:
             order_item.quantity += 1
-            order_item.save
+            order_item.save()
         else:
             order.item.add(order_item)
     else:
@@ -40,14 +40,15 @@ def add_to_cart(request, slug):
     return redirect("product", slug=slug)
 
 def remove_from_cart(request, slug):
-    item = get_object_or_404(Item, slug)
+    item = get_object_or_404(Item, slug=slug)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
 
     if order_qs.exists():
         order = order_qs[0]
-        if order.Items.filter(item__slug=item.slug).exists:
-            order_item = OrderItem.objects.filter(item=item, user=request.user, ordered=False)[0]
-            order.item.remove(order_item)
+        if order.items.filter(item__slug=item.slug).exists:
+            order_item = OrderItem.objects.filter(item=item, user=request.user, ordered=False)
+            if order_item:
+                order_item[0].delete()
         else:
             return redirect("product", slug=slug)
     else:
@@ -74,7 +75,7 @@ def register(request):
             auth.login(request, user)
             return redirect('index')
     else:
-        return render(request, 'products/register2.html')
+        return render(request, 'products/register.html')
 
 
 def login(request):

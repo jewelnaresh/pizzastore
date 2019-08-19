@@ -8,7 +8,9 @@
 
         <div class="col-md-6 mb-4">
 
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" class="img-fluid" alt="">
+          <h4 class="font-weight-bold white-text">{{item.title}}</h4>
+
+          <img src="{% static 'img/pizza3.jpg' %}" class="img-fluid" alt="">
 
         </div>
         <div class="col-md-6 mb-4">
@@ -27,17 +29,18 @@
 
             <p class="lead font-weight-bold">Description</p>
 
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et dolor suscipit libero eos atque quia ipsa
-              sint voluptatibus!
-              Beatae sit assumenda asperiores iure at maxime atque repellendus maiores quia sapiente.</p>
+            <p>{{ object.description }}</p>
 
-            <form class="d-flex justify-content-left">
-              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
+            {% comment %} <form class="d-flex justify-content-left" action="{{ object.get_add_to_cart}}">
+              <input type="number" style="color:#d0c7c7; width: 15%; margin-left: 40px; margin-right: 10px;" value="1" aria-label="Search" class="form-control" style="width: 100px">
               <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
                 <i class="fas fa-shopping-cart ml-1"></i>
               </button>
-
-            </form>
+            </form> {% endcomment %}
+            <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p">Add to cart
+            </a>
+            <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-primary btn-md my-0 p">Remove from cart
+            </a>
           </div>
         </div>
       </div>

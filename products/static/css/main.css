@@ -20,6 +20,12 @@ html, body {
     background-attachment: fixed;
     }
 
+  .carousel-inner > .carousel-item {
+    height: 400px;
+    border-radius: 20px;
+    font-size: 40px;
+  }
+  
 .content
 {
     overflow-x: auto;
@@ -36,11 +42,10 @@ nav {
   border-radius: 60px
 }
 
-/* p {
+p {
     font-family: cursive;
-    font-size: 50px;
-    color: #9c7503;
-} */
+    color: white;
+}
 
 .btn-primary {
     background-color: #ea4335 !important;

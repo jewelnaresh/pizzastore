@@ -1,0 +1,4 @@
+.vscode
+pizzastore_env
+pizzastore/__pycache__
+products/__pycache__

@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.shortcuts import reverse
+import datetime
 
 CATEGORY_CHOICES = {
     ('p', 'Pizza'),
@@ -47,7 +48,7 @@ class OrderItem(models.Model):
                              on_delete=models.CASCADE, blank=True, null=True)
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
+    quantity = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.quantity} of {self.item.title}'
@@ -58,7 +59,7 @@ class Order(models.Model):
                              on_delete=models.CASCADE)
     items = models.ManyToManyField(OrderItem)
     start_date = models.DateTimeField(auto_now_add=True)
-    order_date = models.DateTimeField
+    order_date = models.DateTimeField(default=datetime.datetime.now())
     ordered = models.BooleanField(default=False)
 
     def __str__(self):
