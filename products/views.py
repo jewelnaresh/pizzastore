@@ -39,6 +39,7 @@ def add_to_cart(request, slug):
 
     return redirect("product", slug=slug)
 
+
 def remove_from_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
@@ -46,7 +47,8 @@ def remove_from_cart(request, slug):
     if order_qs.exists():
         order = order_qs[0]
         if order.items.filter(item__slug=item.slug).exists:
-            order_item = OrderItem.objects.filter(item=item, user=request.user, ordered=False)
+            order_item = OrderItem.objects.filter(
+                item=item, user=request.user, ordered=False)
             if order_item:
                 order_item[0].delete()
         else:
@@ -71,7 +73,7 @@ def register(request):
             if password != passwordconfirm:
                 return render(request, 'products/register', {'error': 'Passwords do not match'})
             user = User.objects.create_user(
-                username = username, email = email, password = password)
+                username=username, email=email, password=password)
             auth.login(request, user)
             return redirect('index')
     else:
@@ -80,10 +82,10 @@ def register(request):
 
 def login(request):
     if request.method == 'POST':
-        username=request.POST['username']
-        password=request.POST['password']
+        username = request.POST['username']
+        password = request.POST['password']
 
-        user=authenticate(request, username = username, password = password)
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             auth.login(request, user)
             return redirect('index')
