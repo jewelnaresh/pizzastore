@@ -4,7 +4,9 @@ A pizza ordering website (under construction)
 
 # Stable Demo Link
 
-A stable demo is availabel at http://pure-bayou-38732.herokuapp.com/
+A stable demo is availabel at http://pure-bayou-38732.herokuapp.com/  
+**note**  
+login first to add to cart as without login it gives server error 500
 
 # Technologies Used
 
